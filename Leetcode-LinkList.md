@@ -76,7 +76,7 @@ struct ListNode* mergeTwoLists(struct ListNode* l1, struct ListNode* l2){
 - 把第一个链表的结尾连接到第二个链表的开头，看第二个链表是否存在环；
 - 或者直接比较两个链表的最后一个节点是否相同。
 
-![相交链表](Leetcode 链表专题.assets/相交链表.png)
+![相交链表](Leetcode-LinkList.assets/相交链表.png)
 
 ```c
 struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *headB) {
@@ -100,7 +100,7 @@ struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *he
 
 每次把链表新的结点插入在表头后面，即可实现反转
 
-![头插法](Leetcode 链表专题.assets/头插法.webp)
+![头插法](Leetcode-LinkList.assets/头插法.webp)
 
 ```c
 struct ListNode* reverseList(struct ListNode* head){
@@ -122,7 +122,7 @@ struct ListNode* reverseList(struct ListNode* head){
 
 #### 方法二:递归法*** *
 
-![反转链表-递归法](Leetcode 链表专题.assets/反转链表-递归法.jpg)
+![反转链表-递归法](Leetcode-LinkList.assets/反转链表-递归法.jpg)
 
 ```c
 struct ListNode* reverseList(struct ListNode* head){
@@ -190,9 +190,9 @@ struct ListNode* deleteDuplicates(struct ListNode* head){
 
 下面的动画中设置了哑结点(开头的虚拟结点)，代码中没有用到虚拟节点，但基本思路相同
 
-#### ![快慢指针法](Leetcode 链表专题.assets/快慢指针法.gif)
+#### ![快慢指针法](Leetcode-LinkList.assets/快慢指针法.gif)
 
-![快慢指针法](Leetcode 链表专题.assets/快慢指针法.jpg)
+![快慢指针法](Leetcode-LinkList.assets/快慢指针法.jpg)
 
 ```c
 struct ListNode* removeNthFromEnd(struct ListNode* head, int n){
@@ -255,7 +255,7 @@ struct ListNode* swapPairs(struct ListNode* head){
 
 使用快慢指针找出单链表的中点，把单链表切断(中点前一元素指向NULL)，把后半部分链表反转，然后比较两个链表是否完全一样。
 
-![回文链表方法二](Leetcode 链表专题.assets/回文链表方法二.jpg)
+![回文链表方法二](Leetcode-LinkList.assets/回文链表方法二.jpg)
 
 ```c
 void cut(struct ListNode* head,struct ListNode* cutNode);
@@ -307,7 +307,7 @@ bool IsEqual(struct ListNode* l1,struct ListNode* l2){
 
 题目理解:把一个链表分割成K个连续的部分，要求任意两部分的长度差距不能超过1，前面的部分的长度应该大于等于后面部分的长度，有些部分可能为NULL。[就是类比给n个孩子分k个苹果，先平均分，然后剩下的苹果从前往后一个个给]
 
-![分隔链表](Leetcode 链表专题.assets/分隔链表.jpg)
+![分隔链表](Leetcode-LinkList.assets/分隔链表.jpg)
 
 ```c
 //总体思路:类比给k个孩子分N个苹果，先平均分，再把多的从头往后分(实际操作时，是两个部分一起分的，因为要按照原来的顺序分)
@@ -355,7 +355,7 @@ Given 1->2->3->4->5->NULL,
 return 1->3->5->2->4->NULL.
 ```
 
-![奇偶链表](Leetcode 链表专题.assets/奇偶链表.jpg)
+![奇偶链表](Leetcode-LinkList.assets/奇偶链表.jpg)
 
 ```c
 //这题比较简单

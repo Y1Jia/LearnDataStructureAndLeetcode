@@ -4,11 +4,11 @@
 
 栈的顺序为后进先出，而队列的顺序为先进先出。使用两个栈实现队列，元素入栈时，利用两个栈把元素放入栈底，这样就实现了，先进先出。[此方法是入栈是利用两个栈，出栈时直接pop；也可入栈时直接push,出栈时利用两个栈，把最底下的元素取出来]
 
-![232.用栈实现队列 入队](Leetcode 栈&队列专题.assets/232.用栈实现队列 入队.png)
+![232.用栈实现队列 入队](Leetcode-Stack-and-Queue.assets/232.用栈实现队列 入队.png)
 
 对应的出队直接pop即可
 
-![232.用栈实现队列 出队](Leetcode 栈&队列专题.assets/232.用栈实现队列 出队.png)
+![232.用栈实现队列 出队](Leetcode-Stack-and-Queue.assets/232.用栈实现队列 出队.png)
 
 ```c
 //思路:队列是先进先出的，而栈是先进后出的，所以利用两个栈来实现队列
@@ -77,9 +77,9 @@ void myQueueFree(MyQueue* obj) {
 
 与用栈实现队列相似，用了两个栈，这里用到的方法，在入栈的时候直接加入，出栈时，则将主队列q1中除了最后一个值外的其他值，一个个放入队列q2,然后把q1最后一个pop出去,再把q2中元素移回q1
 
-![用队列实现栈 push](Leetcode 栈&队列专题.assets/用队列实现栈 push.png)
+![用队列实现栈 push](Leetcode-Stack-and-Queue.assets/用队列实现栈 push.png)
 
-![用队列实现栈 pop](Leetcode 栈&队列专题.assets/用队列实现栈 pop.png)
+![用队列实现栈 pop](Leetcode-Stack-and-Queue.assets/用队列实现栈 pop.png)
 
 自己定义的这个队列，由一个数组(malloc出来的),和front,rear,size组成，front指第一个元素的位置，rear指最后一个元素的后一个位置。且这个队列为循环队列。
 
@@ -184,7 +184,7 @@ void myStackFree(MyStack* obj) {  //一层层free
 
 或者可以只用一个栈，就是在栈中定义两个数组，一个存储栈中的值，一个存储最小值。两个方法本质是一样的。
 
-![155.最小栈 辅助栈](Leetcode 栈&队列专题.assets/155.最小栈 辅助栈.gif)
+![155.最小栈 辅助栈](Leetcode-Stack-and-Queue.assets/155.最小栈 辅助栈.gif)
 
 ```c
 //思路:基于栈后进先出的特点，利用辅助栈来记录每次push后栈中的最小值
