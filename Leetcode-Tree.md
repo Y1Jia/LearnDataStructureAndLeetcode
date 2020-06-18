@@ -22,10 +22,10 @@ int maxDepth(struct TreeNode* root){
 
 利用height函数计算每个结点的高度。接下来就是比较每个节点左右子树的高度。在一棵以 r为根节点的树T 中，只有每个节点左右子树高度差不大于1 时，该树才是平衡的。因此可以比较每个节点左右两棵子树的高度差，然后向上递归。
 
-（但是就算发现下面子树已经不满足了平衡二叉树条件，但还是会向上继续递归，知道回到根节点，所以方法二更好）
+在这个算法中，isBlance函数会遍历每个结点，调用height函数，而调用一次height函数就会遍历当前结点以及其子树，这样会产生很多的重复计算量。
 
 ```c
- //自顶向下的递归，从根节点向叶结点遍历(先做左子树再右子树)   比较各个结点左右子数的高度差(比较是从低向上的)
+ //自顶向下的递归，从根节点向叶结点遍历(先做左子树再右子树)   比较各个结点左右子数的高度差(比较是从底向上的)
 #include<math.h>
 bool isBalanced(struct TreeNode* root){
     if(root==NULL)  return true;
@@ -41,9 +41,9 @@ int height(struct TreeNode* root){           //计算每个节点的深度
 
 方法一自顶向下，求height时会有很多的重复运算，因此应该想办法遍历一次树就得到答案，即在左右子树不平衡的时候提前结束
 
-而方法二，对二叉树做先序遍历，从底至顶返回子树最大高度，若判定某子树不是平衡树则 “剪枝” ，直接向上返回。
+而在方法二中，isBlance函数只调用一次height函数，在height函数中会遍历树一次，在计算过程中，同时比较左右子树深度差，因此只用遍历一次树。同时通过“剪枝”的手段，减少运算量。
 
-此处用到的全局变量result，在遇到左右子树bu(因为运用了全局变量，可能leetcode中会无法通过)
+此处的“剪枝”:用全局变量result，在遇到左右子树不平衡时直接返回0 (因为运用了全局变量，可能leetcode中会无法通过)
 
 ```c
 bool result=true;
@@ -75,8 +75,8 @@ int height(struct TreeNode* root){
 
 ```c
 //思路:二叉树的直径即最大的最小路径，这个路径可能不经过根节点，但肯定会经过一个结点(即该路径由一个父结点和它的子树向下延伸组成)
-//那么可以递归计算每个结点作为父节点时的路径长度(左子数深度+右子数深度+2)  
-//利用全局变量在遍历的过程中记录最长路径 这样可以较少重复计算 最后输出
+//那么可以递归计算每个结点作为父节点时的路径长度(左子树深度+右子树深度+2)  
+//利用全局变量在遍历的过程中记录最长路径 这样可以较少重复计算 最后输出 (类似上题中的自底向上递归的方法)
 int max;
 int diameterOfBinaryTree(struct TreeNode* root){
     if(root==NULL) return 0;
@@ -260,15 +260,15 @@ bool check(struct TreeNode* p,struct TreeNode* q){
 
 ```c
 //注意点:递归的终止条件是到叶子节点，即左右子树均为空
-//因此当左右子树均为空时，返回1
-//当左右子树有一个为空时，返回非空子树的深度
-//当左右子树均不用时，返回左右子树深度中小的那个
+//1因此当左右子树均为空时，返回1
+//2当左右子树有一个为空时，返回非空子树的深度(注意+1)
+//3当左右子树均不空时，返回左右子树深度中小的那个(注意+1)
 int minDepth(struct TreeNode* root){
     if(root==NULL) return 0;
     int l=minDepth(root->left);
     int r=minDepth(root->right);
-    if(root->left==NULL || root->right==NULL) return l+r+1;
-    return fmin(l,r)+1;
+    if(root->left==NULL || root->right==NULL) return l+r+1;   //1 2被合并为这个语句
+    return fmin(l,r)+1;                                       //3
 }
 ```
 
@@ -278,6 +278,8 @@ int minDepth(struct TreeNode* root){
 
 ```c
 //递归遍历每一个结点，判断每个结点的左儿子是不是叶子，如果是，则加上
+//对于每个结点，如果其左儿子是叶子结点，那么其左儿子的值应该叫上，并继续递归调用判断当前结点的右儿子
+//如果当前结点的左儿子不是叶子结点，那么递归调用判断当前节点的左儿子和右儿子
 bool IsLeaf(struct TreeNode* root);
 int sumOfLeftLeaves(struct TreeNode* root){
     if(root==NULL) return 0;
@@ -294,7 +296,7 @@ bool IsLeaf(struct TreeNode* root){
 
 ```c
 //******🔺
-//递归遍历每个结点，计算每个结点开始的同路径长度，记录最大值
+//递归遍历每个结点，计算每个结点开始的同路径长度，记录最大值 (自底向上递归)
 int dfs(struct TreeNode* root);
 int path;
 int longestUnivaluePath(struct TreeNode* root){
@@ -313,14 +315,17 @@ int dfs(struct TreeNode* root){
 }
 ```
 
-### 337.打家劫舍III
+### 337.打家劫舍III🔺***
 
-好像可用动态规划，这里的方法直接暴力递归了，运行速度较慢
+题目描述:这个地区只有一个入口，我们称之为“根”。 除了“根”之外，每栋房子有且只有一个“父“房子与之相连。一番侦察之后，聪明的小偷意识到“这个地方的所有房屋的排列类似于一棵二叉树”。 如果两个直接相连的房子在同一天晚上被打劫，房屋将自动报警。
+
+计算在不触动警报的情况下，小偷一晚能够盗取的最高金额。
+
+PS:这里好像用到了动态规划？？？？
 
 ```c
-//层的间隔遍历  递归
+//此题并不是隔层求解那么简单
 //终止条件:结点为NULL
-//若令根节点为第一层 则 sum1计算奇数层之和 sum2计算偶数层之和
 int rob(struct TreeNode* root){
     if(root==NULL) return 0;
     int sum1=root->val;
@@ -438,7 +443,7 @@ int findBottomLeftValue(struct TreeNode* root){
 }
 ```
 
-## 前中后序遍历
+## 前中后序遍历***(重要)
 
 ```
     1
@@ -640,6 +645,62 @@ struct TreeNode* trimBST(struct TreeNode* root, int L, int R){
     root->left=trimBST(root->left,L,R);
     root->right=trimBST(root->right,L,R);
     return root;
+}
+```
+
+### 230.二叉搜索树中第k小的元素
+
+#### 方法一(递归)
+
+通过递归实现中序遍历，把遍历结果存在数组中，然后输出数组第k个元素(下标为k-1)
+
+```c
+///////////////////////////////////////////第一次自我尝试时的做法
+//通过中序遍历找第k小的元素
+//递归法  利用BST中序遍历结果为升序的特点
+//中序遍历全部元素存在数组中然后返回第k个
+int* search(struct TreeNode* root,int* ret,int* num);
+#define Maxsize 10000
+int kthSmallest(struct TreeNode* root, int k){
+    int* ret=(int*)malloc(Maxsize*sizeof(int));       
+    int num=0;
+    ret=search(root,ret,&num);
+    return ret[k-1];
+}
+int* search(struct TreeNode* root,int* ret,int* num){  //中序遍历并返回结果数组
+    if(root==NULL) return NULL;
+    search(root->left,ret,num);
+    ret[(*num)++]=root->val;
+    search(root->right,ret,num);
+    return ret;
+}
+```
+
+#### 方法二(迭代，栈)
+
+迭代。利用栈实现中序遍历，pop时按照升序pop，因此把k作为计数器，每次pop时k-1,当k为0时，当前pop出来的结点的值就是第k小的值，输出即可。
+
+```c
+//方法二 参考94题非递归实现二叉树的中序遍历
+//迭代 用栈实现二叉树的中序遍历
+#define Maxsize 10000
+int kthSmallest(struct TreeNode* root, int k){
+    if(root==NULL) return NULL;
+    struct TreeNode** stack=(struct TreeNode**)malloc(Maxsize*sizeof(struct TreeNode*));
+    int top=-1;
+    struct TreeNode* cur=root;
+    while(cur!=NULL || top!=-1)
+    {
+        while(cur!=NULL)
+        {
+            stack[++top]=cur;
+            cur=cur->left;        
+        }
+        cur=stack[top--];
+        if(--k==0) return cur->val;
+        cur=cur->right;
+    }
+    return NULL;
 }
 ```
 
