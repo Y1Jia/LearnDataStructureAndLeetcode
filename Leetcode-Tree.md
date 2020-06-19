@@ -704,3 +704,90 @@ int kthSmallest(struct TreeNode* root, int k){
 }
 ```
 
+### 538.把二叉搜索树转换为累加树
+
+#### 方法一(迭代，栈)
+
+```c
+//反序中序遍历
+//用栈从大到小pop (push时先右再左 “中序遍历的反序”)
+//第一次pop时值最大的结点，那么把它加在sum上 此时sum的值就是叠加树该节点的值
+//第二次pop时 是值第二大的结点 把它的值加到sum上 那么sum就是最大的值和第二大的值的和 即为叠加树中该结点的值
+#define Maxsize 1000
+struct TreeNode* convertBST(struct TreeNode* root){
+    if(root==NULL) return NULL;
+    struct TreeNode** stack=(struct TreeNode**)malloc(Maxsize*sizeof(struct TreeNode*));
+    int top=-1;
+    int sum=0;
+    struct TreeNode* cur=root;
+    while(top!=-1 || cur!=NULL)
+    {
+        while(cur!=NULL)
+        {
+            stack[++top]=cur;
+            cur=cur->right;
+        }
+        cur=stack[top--];
+        sum += cur->val; //sum中记录 当前节点以及比当前结点的值大的所有节点 的值的总和 (即累加树中这个结点的值)
+        cur->val =sum;
+        cur=cur->left;
+    }
+    return root;
+}
+```
+
+#### 方法二(递归)
+
+```c
+//方法二递归实现
+//其实一个函数就可以实现，但是全局变量sum会出错，所以写了两个函数
+struct TreeNode* convert(struct TreeNode* root);
+int sum=0;
+struct TreeNode* convertBST(struct TreeNode* root){
+    sum=0;
+    root=convert(root);
+    return root;
+}
+struct TreeNode* convert(struct TreeNode* root){   //递归进行反序中序遍历修改结点的值
+    if(root==NULL) return NULL;
+    root->right=convert(root->right);
+    sum += root->val;
+    root->val =sum;
+    root->left=convert(root->left);
+    return root;
+}
+```
+
+### 235.二叉树搜索树的最近公共祖先
+
+给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。
+
+百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
+
+```c
+//用递归实现
+//把一个大的问题分解为若干个相同的子问题
+//设当前结点为根节点(可能是某子数的根节点)有三种情况:
+//1.两个结点分别在左右子树中，那么公共结点就是当前的根节点
+//2.两节点中一个结点为根节点，那么公共节点就是当前根节点
+//3.两个结点均在左子树(或右子树)，那么递归找左子树(或右子数)即可
+//三种情况合并一下即为下面的代码
+struct TreeNode* lowestCommonAncestor(struct TreeNode* root, struct TreeNode* p, struct TreeNode* q) {
+    if(p->val<root->val && q->val<root->val) return lowestCommonAncestor(root->left,p,q);
+    if(p->val>root->val && q->val>root->val) return lowestCommonAncestor(root->right,p,q);
+    return root;
+}
+
+//方法二迭代，基本思想一样,只不过用指针和循环代替了递归而已
+struct TreeNode* lowestCommonAncestor(struct TreeNode* root, struct TreeNode* p, struct TreeNode* q){
+    struct TreeNode* cur=root;
+    while(cur!=NULL)
+    {
+        if(p->val<cur->val && q->val<cur->val) cur=cur->left;
+        else if(p->val>cur->val && q->val>cur->val) cur=cur->right;
+        else return cur;
+    }
+    return cur;
+}
+```
+
