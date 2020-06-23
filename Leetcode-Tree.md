@@ -791,3 +791,206 @@ struct TreeNode* lowestCommonAncestor(struct TreeNode* root, struct TreeNode* p,
 }
 ```
 
+### 236.二叉树的最近公共祖先
+
+这题是235题的升级版，二叉搜索树变成了二叉树，即有序的条件没有了，第一次尝试的时候通过了两个递归函数自顶向下来找最近公共祖先(一个递归遍历二叉树，另一个递归判断某结点是否在树中)，但是递归过程中会产生大量的重复计算，最终会超出时间限制。
+
+因此参考了leetcode官方题解，使用了深度优先搜索，从底向上判断最近公共祖先。
+
+一棵树，两个要找的结点，对于最近公共祖先来说，有两种情况：①树根把两个结点分开来，即左子树有要找的结点，右子数也有要找的结点(不用关心哪个在左，哪个在右，因为所给p,q一定是不同的)；②根节点就是要找的结点，而另一个结点在左子树或右子树中。
+
+那么这里最近公共祖先的判断条件就是 ` (lson&&rson) || ((root->val==p->val||root->val==q->val)&&(lson||rson)) ` 分别对应上面的两个情况。
+
+```c
+struct TreeNode* ans;
+bool dfs(struct TreeNode* root,struct TreeNode* p,struct TreeNode* q);
+struct TreeNode* lowestCommonAncestor(struct TreeNode* root, struct TreeNode* p, struct TreeNode* q) {
+    dfs(root,p,q);
+    return ans;
+}
+bool dfs(struct TreeNode* root,struct TreeNode* p,struct TreeNode* q){  //遍历判断root为根的子树中是否有p或q结点，遍历的同时利用最近公共祖先的判断条件进行判断，若找到最近公共祖先则记录下来
+    if(root==NULL) return false;
+    bool lson=dfs(root->left,p,q);
+    bool rson=dfs(root->right,p,q);
+    if( (lson&&rson) || ((root->val==p->val||root->val==q->val)&&(lson||rson)) )
+       ans=root;
+    return lson||rson||(root->val==p->val||root->val==q->val);
+}
+```
+
+### 108.将有序数组转换为二叉搜索树
+
+将一个按照升序排列的有序数组，转换为一棵高度平衡二叉搜索树。
+
+本题中，一个高度平衡二叉树是指一个二叉树*每个节点* 的左右两个子树的高度差的绝对值不超过 1。
+
+此方法可以看作中序遍历的逆过程
+
+```c
+//函数helper用来递归创建二叉树
+//helper参数为 数组头指针，left，right，(left和right限定了该树的区间)
+//如果left>right，则返回NULL
+//找到left和right的中间位置 midPositon   PS:这里在偶数情况下，每次取的是中间两个结点中左边的那个。(也可以在left+right为偶数情况，算出midPositon后再把它+1，来取右边的结点)(偶数情况取左和取右二叉树不一样，但都是对的)
+//建立根节点并递归
+struct TreeNode* helper(int * nums,int left,int right){
+    if(left>right) return NULL;
+    int midPositon=(left+right)/2;
+    struct TreeNode* root=(struct TreeNode*)malloc(sizeof(struct TreeNode));
+    root->val=nums[midPositon];
+    root->left=helper(nums,left,midPositon-1);
+    root->right=helper(nums,midPositon+1,right);
+    return root;
+}
+
+struct TreeNode* sortedArrayToBST(int* nums, int numsSize){
+    return helper(nums,0,numsSize-1);
+}
+```
+
+### 109.有序链表转换二叉搜索树
+
+```c
+//基本思想和108题相同，只不过数组换成了链表
+//函数preMid   返回链表中间结点的前一个结点(快慢指针法)
+//函数newTreeNode  创建一个新的树的结点
+//主函数中，找到链表中间结点(和中间结点的前一个结点，用于断开指针)，中间节点的值作为根节点的值，把链表断开，创建“树根”，然后递归左右两部分
+struct ListNode* preMid(struct ListNode *head){       //找链表中间结点的前一个结点
+    struct ListNode* slow=head,*fast=head,*preslow=head;
+    while(fast!=NULL&&fast->next!=NULL)
+    {
+        preslow=slow;
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    return preslow;
+}
+struct TreeNode* newTreeNode(int x){
+    struct TreeNode* root=(struct TreeNode*)malloc(sizeof(struct TreeNode));
+    root->val=x;
+    root->left=root->right=NULL;
+    return root;
+}
+struct TreeNode* sortedListToBST(struct ListNode* head){
+    if(head==NULL) return NULL;                             //递归的终止条件:链表中只有0或1个元素
+    if(head->next==NULL) return newTreeNode(head->val);
+    struct ListNode* premid=preMid(head);
+    struct ListNode* mid=premid->next;
+    premid->next=NULL;              //断开链表 分为前后两部分
+    struct TreeNode* root=newTreeNode(mid->val);
+    root->left=sortedListToBST(head);
+    root->right=sortedListToBST(mid->next);
+    return root;
+}
+```
+
+### 653.两树之和VI - 输入BST
+
+给定一个二叉搜索树和一个目标结果，如果 BST 中存在两个元素且它们的和等于给定的目标结果，则返回 true。
+
+```c
+//使用中序遍历把结果存在数组中
+//用双指针(即下标)，来找对应结果是否存在  i指向最小，j指向最大。若i+j<目标值，那么i++;>目标值，则j--;
+#define Maxsize 10000
+void inorder(struct TreeNode* root,int *nums,int* length);
+bool findTarget(struct TreeNode* root, int k){
+    int i=0,j=-1;                         //j记录最大值的下标(即数组最后一个元素)，把其指针传给inorder函数
+    int* nums=(int*)malloc(Maxsize*sizeof(int));
+    inorder(root,nums,&j);
+    while(i<j)                  //循环判断数组中是否存在两数之和等于k的情况
+    {
+        if(nums[i]+nums[j]==k) return true;
+        else if(nums[i]+nums[j]<k) i++;
+        else  j--;
+    }
+    return false;
+}
+void inorder(struct TreeNode* root,int *nums,int* length){   //递归中序遍历二叉搜索树，并且把结果存在数组中
+    if(root==NULL) return;
+    inorder(root->left,nums,length);
+    nums[++(*length)]=root->val;
+    inorder(root->right,nums,length);
+    return;
+}
+```
+
+### 530.二叉搜索树的最小绝对差
+
+给你一棵所有节点为非负值的二叉搜索树，请你计算树中任意两节点的差的绝对值的最小值。
+
+思路：同样利用中序遍历结果有序的特点。
+
+```c
+//递归实现中序遍历   每次比较相邻两数的差值
+//用一个全局变量 int保存最小值   一个preNode保存上一个结点
+int min; 
+struct TreeNode* preNode;
+void inOrder(struct TreeNode* root){  //递归实现中序遍历
+    if(root==NULL) return;
+    inOrder(root->left);
+    if(preNode!=NULL) min=fmin(min,root->val-preNode->val);  //preNode初始化为NULL，这样第一次就不会比较
+    preNode=root;
+    inOrder(root->right);
+}
+int getMinimumDifference(struct TreeNode* root){
+    preNode=NULL;
+    min=INT_MAX;      //知识点※
+    inOrder(root);
+    return min;
+}
+```
+
+### 501.二叉搜索树中的众数
+
+给定一个有相同值的二叉搜索树（BST），找出 BST 中的所有众数（出现频率最高的元素）。
+
+假定 BST 有如下定义：
+
+结点左子树中所含结点的值小于等于当前结点的值
+       结点右子树中所含结点的值大于等于当前结点的值
+       左子树和右子树都是二叉搜索树
+
+```c
+//利用中序遍历结果有序的特点
+//用数组存储众数  用一个preNode存储上一结点的值  curCnt---记录当前数出现的次数   maxCnt---记录当前出现的最高频率
+//在中序遍历过程中 判断根节点和上一结点是否相同 相同则curCnt++ 否则 curCnt重置为1； 同时如果curCnt>maxCnt则之前存储的众数都要清除掉了；如果curCnt==maxCnt，那么把当前的数也存储在数组中
+#define MaxSize 10000
+struct TreeNode* preNode;
+int curCnt,maxCnt;
+void inOrder(struct TreeNode* root,int* output,int* returnSize);
+int* findMode(struct TreeNode* root, int* returnSize){
+    *returnSize =-1;
+    preNode=NULL;
+    curCnt=maxCnt=1;
+    int* output=(int*)malloc(MaxSize*sizeof(int));
+    inOrder(root,output,returnSize);
+    (*returnSize)++;           //因为在前面 *returnSize一直是作为数组下标 所以在最后+1  （返回数组中的元素个数）
+    return output;
+}
+void inOrder(struct TreeNode* root,int* output,int* returnSize){
+    if(root==NULL) return;
+    inOrder(root->left,output,returnSize);
+    if(preNode!=NULL)           //第二次pop出结点时开始比较
+    {
+        if(preNode->val==root->val) curCnt++;
+        else curCnt=1;
+    }
+    if(curCnt>maxCnt)
+    {
+        maxCnt=curCnt;
+        *returnSize=0;         //即将数组"清零" (其实数组本身并没有改变，可以看作把指针指向重置了)
+        output[*returnSize]=root->val;
+    }
+    else if(curCnt==maxCnt) output[++(*returnSize)]=root->val;
+    preNode=root;
+    inOrder(root->right,output,returnSize);
+    return;
+}
+```
+
+## Trie(前缀树) unfinished
+
+### 208.实现一个trie
+
+
+
+### 677.键值映射
