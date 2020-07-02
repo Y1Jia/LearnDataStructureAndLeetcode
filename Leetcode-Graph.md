@@ -18,7 +18,7 @@
 
 <a href="###Prim算法">Prim算法</a>
 
-[Kruskal算法](#C2)
+[Kruskal算法](#C3)
 
 ## 拓扑排序
 
