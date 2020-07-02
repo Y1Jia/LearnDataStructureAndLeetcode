@@ -18,7 +18,7 @@
 
 <a href="###Prim算法">Prim算法</a>
 
-<a href="###Kruskal算法">Kruskal算法</a>
+[Kruskal算法](#C2)
 
 ## 拓扑排序
 
@@ -302,7 +302,7 @@ void PrintPath( Vertex V, Table T)
 
 ### Prim算法
 
-### Kruskal算法
+### <span id="C3">Kruskal算法</span>
 
 
 
