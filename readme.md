@@ -12,9 +12,13 @@
 
 ### [哈希表(散列表)](https://github.com/nuclear30/LearnDataStructureAndLeetcode/blob/master/Leetcode-hash-table.md)
 
+### [图](https://github.com/nuclear30/LearnDataStructureAndLeetcode/blob/master/Leetcode-Graph.md)
+
 ## 算法部分
 
 ### [排序](https://github.com/nuclear30/LearnDataStructureAndLeetcode/blob/master/Leetcode-Sort.md)
+
+### [贪婪算法](https://github.com/nuclear30/LearnDataStructureAndLeetcode/blob/master/Leetcode-greedy-algorithm.md)
 
 ## 参考资料
 
