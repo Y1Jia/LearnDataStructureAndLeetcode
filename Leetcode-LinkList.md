@@ -2,7 +2,29 @@
 
 注:T445需要用到栈的知识，所以还没做
 
-### 21.合并两个有序链表
+## 目录
+
+[21.合并两个有序链表](#A1)
+
+[160.相交链表***](#A2)
+
+[206.反转链表](#A3)
+
+[83.删除排序链表中的重复元素](#A4)
+
+[19.删除链表的倒数第N个结点（Medium）](#A5)
+
+[24.两两交换链表中的结点](#A6)
+
+[234.回文链表](#A7)
+
+[725.分隔链表(Medium)](#A8)
+
+[328.奇偶链表](#A9)
+
+
+
+### <span id="A1">21.合并两个有序链表</span>
 
 输入:1->2->4, 1->3->4 输出:1->1->2->3->4->4
 
@@ -65,7 +87,7 @@ struct ListNode* mergeTwoLists(struct ListNode* l1, struct ListNode* l2){
 }
 ```
 
-### 160.相交链表***
+### <span id="A2">160.相交链表***</span>
 
 题目描述:寻找两个链表相交的结点
 
@@ -92,7 +114,7 @@ struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *he
 }
 ```
 
-### 206.反转链表
+### <span id="A3">206.反转链表</span>
 
 输入:1->2->3->4->5->NULL 输出:5->4->3->2->1->NULL
 
@@ -137,7 +159,7 @@ struct ListNode* reverseList(struct ListNode* head){
 }
 ```
 
-### 83.删除排序链表中的重复元素
+### <span id="A4">83.删除排序链表中的重复元素</span>
 
 ```
 Given 1->1->2, return 1->2.
@@ -184,7 +206,7 @@ struct ListNode* deleteDuplicates(struct ListNode* head){
 }
 ```
 
-### 19.删除链表的倒数第N个结点（Medium）
+### <span id="A5">19.删除链表的倒数第N个结点（Medium）</span>
 
 #### 方法:快慢指针法*** *
 
@@ -213,7 +235,7 @@ struct ListNode* removeNthFromEnd(struct ListNode* head, int n){
 }
 ```
 
-### 24.两两交换链表中的结点
+### <span id="A6">24.两两交换链表中的结点</span>
 
 #### 方法:递归**(掌握递归三部曲)
 
@@ -241,7 +263,7 @@ struct ListNode* swapPairs(struct ListNode* head){
 }
 ```
 
-### 234.回文链表
+### <span id="A7">234.回文链表</span>
 
 判断一个链表是否为回文链表
 
@@ -303,7 +325,7 @@ bool IsEqual(struct ListNode* l1,struct ListNode* l2){
 }
 ```
 
-### 725.分隔链表(Medium)
+### <span id="A8">725.分隔链表(Medium)</span>
 
 题目理解:把一个链表分割成K个连续的部分，要求任意两部分的长度差距不能超过1，前面的部分的长度应该大于等于后面部分的长度，有些部分可能为NULL。[就是类比给n个孩子分k个苹果，先平均分，然后剩下的苹果从前往后一个个给]
 
@@ -345,7 +367,7 @@ struct ListNode** splitListToParts(struct ListNode* root, int k, int* returnSize
 }
 ```
 
-### 328.奇偶链表
+### <span id="A9">328.奇偶链表</span>
 
 题目描述:给定一个单链表，把所有的奇数节点和偶数节点分别排在一起。请注意，这里的奇数节点和偶数节点指的是节点编号的奇偶性，而不是节点的值的奇偶性。
 

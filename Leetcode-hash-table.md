@@ -1,6 +1,18 @@
 # Leetcode-hash-table
 
-## 1.两数之和
+## 目录
+
+[1.两数之和](#A1)
+
+[217.存在重复元素](#A2)
+
+[594.最长和谐子序列](#A3)
+
+[128.最长连续序列](#A4)
+
+
+
+## <span id="A1">1.两数之和</span>
 
 题目描述:给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
 
@@ -35,7 +47,7 @@ int NextPrime(int n)  //求不小于n的一个素数
     int i;
     for(;;n+=2)
     {
-        for(i=3;i<sqrt(n);i+=2)
+        for(i=3;i<=sqrt(n);i+=2)
             if(n%i==0) goto out;
         return n;
         out:;
@@ -128,7 +140,7 @@ int* twoSum(int* nums, int numsSize, int target, int* returnSize){
 }
 ```
 
-## 217.存在重复元素
+## <span id="A2">217.存在重复元素</span>
 
 题目描述:给定一个整数数组，判断是否存在重复元素。
 
@@ -151,7 +163,7 @@ int NextPrime(int n)
     int i;
     for(;;n+=2)
     {
-       for(i=3;i<sqrt(n);i++)
+       for(i=3;i<=sqrt(n);i++)
           if(n%i==0) goto out;
         return n;
         out:;
@@ -226,7 +238,7 @@ bool containsDuplicate(int* nums, int numsSize){
 }
 ```
 
-## 594.最长和谐子序列
+## <span id="A3">594.最长和谐子序列</span>
 
 题目描述:和谐数组是指一个数组里元素的最大值和最小值之间的差别正好是1。
 
@@ -252,7 +264,7 @@ int NextPrime(int n)            //返回不小于n的最小素数
     int i;
     for(;;n+=2)
     {
-        for(i=3;i<sqrt(n);i++)
+        for(i=3;i<=sqrt(n);i++)
            if(n%i==0) goto out;
         return n;
         out:;
@@ -344,7 +356,7 @@ int findLHS(int* nums, int numsSize){
 }
 ```
 
-## 128.最长连续序列
+## <span id="A4">128.最长连续序列</span>
 
 
 给定一个未排序的整数数组，找出最长连续序列的长度。
@@ -376,7 +388,7 @@ int NextPrime(int n)
     if(n%2==0) n++;
     for(;;n+=2)
     {
-        for(int i=3;i<sqrt(n);i++)
+        for(int i=3;i<=sqrt(n);i++)
            if(n%i==0) goto out;
         return n;
         out:;
