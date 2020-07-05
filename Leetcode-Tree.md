@@ -1,10 +1,86 @@
 # Leetcode 树专题
 
-## 递归
+## 目录
+
+[###递归](#A)
+
+[104.二叉树的最大深度](#A1)
+
+[110.平衡二叉树](#A2)
+
+[543.二叉树的直径](#A3)
+
+[226.翻转二叉树](#A4)
+
+[617.合并二叉树](#A5)
+
+[112.路径总和](#A6)
+
+[437.路经总和III](#A7)
+
+[572.另一个树的子树](#A8)
+
+[101.对称二叉树](#A9)
+
+[111.二叉树的深度](#A10)
+
+[404.左子叶之和](#A11)
+
+[687.最长同值路径🔺***](#A12)
+
+[337.打家劫舍III🔺***](#A13)
+
+[671.二叉树中第二小的节点](#A14)
+
+[###层次遍历](#B)
+
+[637.二叉树的层平均值](#B1)
+
+[513.找树左下角的值](#B2)
+
+[###前中后序遍历***(重要)](#C)
+
+[114.非递归实现二叉树的前序遍历](#C1)
+
+[145.非递归实现二叉树的后序遍历](#C2)
+
+[94.非递归实现二叉树的中序遍历](#C3)
+
+[###二叉查找树(BST)](#D)
+
+[669.修剪二叉搜索树](#D1)
+
+[230.二叉搜索树中第k小的元素](#D2)
+
+[538.把二叉搜索树转换为累加树](#D3)
+
+[235.二叉树搜索树的最近公共祖先](#D4)
+
+[236.二叉树的最近公共祖先](#D5)
+
+[108.将有序数组转换为二叉搜索树](#D6)
+
+[109.有序链表转换二叉搜索树](#D7)
+
+[653.两树之和VI - 输入BST](#D8)
+
+[530.二叉搜索树的最小绝对差](#D9)
+
+[501.二叉搜索树中的众数](#D10)
+
+[###Trie(前缀树) unfinished](#E)
+
+[208.实现一个trie](#E1)
+
+677.键值映射(#E2)
+
+
+
+## <span id="A">递归</span>
 
 一棵树要么是空树，要么有两个指针，每个指针指向一棵树。树是一种递归结构，很多树的问题可以使用递归来处理。
 
-### 104.二叉树的最大深度
+### <span id="A1">104.二叉树的最大深度</span>
 
 二叉树的最大深度就是它的根节点的 左右子树深度最大的那个加一 
 
@@ -16,7 +92,7 @@ int maxDepth(struct TreeNode* root){
 }
 ```
 
-### 110.平衡二叉树
+### <span id="A2">110.平衡二叉树</span>
 
 #### 方法一:自顶向下递归***
 
@@ -61,7 +137,7 @@ int height(struct TreeNode* root){
 }
 ```
 
-### 543.二叉树的直径
+### <span id="A3">543.二叉树的直径</span>
 
 给定一棵二叉树，你需要计算它的直径长度。一棵二叉树的直径长度是任意两个结点路径长度中的最大值。这条路径可能穿过也可能不穿过根结点。示例 :
 给定二叉树
@@ -93,7 +169,7 @@ int depth(struct TreeNode* root){     //计算结点深度
 }
 ```
 
-### 226.翻转二叉树
+### <span id="A4">226.翻转二叉树</span>
 
 ```c
 //利用递归解决 
@@ -109,7 +185,7 @@ struct TreeNode* invertTree(struct TreeNode* root){
 }
 ```
 
-### 617.合并二叉树
+### <span id="A5">617.合并二叉树</span>
 
 ```c
 //利用递归实现
@@ -126,7 +202,7 @@ struct TreeNode* mergeTrees(struct TreeNode* t1, struct TreeNode* t2){
 }
 ```
 
-### 112.路径总和
+### <span id="A6">112.路径总和</span>
 
 ```c
 //利用递归实现
@@ -139,7 +215,7 @@ bool hasPathSum(struct TreeNode* root, int sum){
 }
 ```
 
-### 437.路经总和III
+### <span id="A7">437.路经总和III</span>
 
 题目描述：给定一个二叉树，它的每个结点都存放着一个整数值。
 
@@ -184,7 +260,7 @@ int pathSumStartWithRoot(struct TreeNode* root,int sum){
 }
 ```
 
-### 572.另一个树的子树
+### <span id="A8">572.另一个树的子树</span>
 
 题目描述:给定两个非空二叉树 s 和 t，检验 s 中是否包含和 t 具有相同结构和节点值的子树。s 的一个子树包括 s 的一个节点和这个节点的所有子孙。s 也可以看做它自身的一棵子树。
 
@@ -231,7 +307,7 @@ bool isSubtreeStartWithRoot(struct TreeNode* s,struct TreeNode* t){
 }
 ```
 
-### 101.对称二叉树
+### <span id="A9">101.对称二叉树</span>
 
 题目描述:给定一个二叉树，检查它是否是镜像对称的。
 
@@ -250,7 +326,7 @@ bool check(struct TreeNode* p,struct TreeNode* q){
 }
 ```
 
-### 111.二叉树的深度
+### <span id="A10">111.二叉树的深度</span>
 
 给定一个二叉树，找出其最小深度。
 
@@ -272,7 +348,7 @@ int minDepth(struct TreeNode* root){
 }
 ```
 
-### 404.左子叶之和
+### <span id="A11">404.左子叶之和</span>
 
 计算给定二叉树的所有左叶子之和。
 
@@ -292,7 +368,7 @@ bool IsLeaf(struct TreeNode* root){
 }
 ```
 
-### 687.最长同值路径🔺***
+### <span id="A12">687.最长同值路径🔺***</span>
 
 ```c
 //******🔺
@@ -315,7 +391,7 @@ int dfs(struct TreeNode* root){
 }
 ```
 
-### 337.打家劫舍III🔺***
+### <span id="A13">337.打家劫舍III🔺***</span>
 
 题目描述:这个地区只有一个入口，我们称之为“根”。 除了“根”之外，每栋房子有且只有一个“父“房子与之相连。一番侦察之后，聪明的小偷意识到“这个地方的所有房屋的排列类似于一棵二叉树”。 如果两个直接相连的房子在同一天晚上被打劫，房屋将自动报警。
 
@@ -336,7 +412,7 @@ int rob(struct TreeNode* root){
 }
 ```
 
-### 671.二叉树中第二小的节点
+### <span id="A14">671.二叉树中第二小的节点</span>
 
 ```c
 //特点：一个节点要么具有 0 个或 2 个子节点，如果有子节点，那么根节点是最小的节点。
@@ -356,9 +432,9 @@ int findSecondMinimumValue(struct TreeNode* root){
 }
 ```
 
-## 层次遍历
+## <span id="B">层次遍历</span>
 
-### 637.二叉树的层平均值
+### <span id="B1">637.二叉树的层平均值</span>
 
 给定一个非空二叉树, 返回一个由每层节点平均值组成的数组.
 
@@ -420,7 +496,7 @@ double* averageOfLevels(struct TreeNode* root, int* returnSize){
 }
 ```
 
-### 513.找树左下角的值
+### <span id="B2">513.找树左下角的值</span>
 
 给定一个二叉树，在树的最后一行找到最左边的值。
 
@@ -443,7 +519,7 @@ int findBottomLeftValue(struct TreeNode* root){
 }
 ```
 
-## 前中后序遍历***(重要)
+## <span id="C">前中后序遍历***(重要)</span>
 
 ```
     1
@@ -494,7 +570,7 @@ void dfs(TreeNode root) {
 }
 ```
 
-### 114.非递归实现二叉树的前序遍历
+### <span id="C1">114.非递归实现二叉树的前序遍历</span>
 
 给定一个二叉树，返回它的 *前序* 遍历。
 
@@ -534,7 +610,7 @@ int* preorderTraversal(struct TreeNode* root, int* returnSize){
 }
 ```
 
-### 145.非递归实现二叉树的后序遍历
+### <span id="C2">145.非递归实现二叉树的后序遍历</span>
 
 /前序遍历中顺序为root-left-right,后序遍历顺序为left-right-root,可以把前序遍历的顺序改为root-right-left，那么就和后序遍历刚好相反。(那么把修改后的前序遍历的结果反过来就是后序遍历的结果)
 
@@ -580,7 +656,7 @@ int* postorderTraversal(struct TreeNode* root, int* returnSize){
 }
 ```
 
-### 94.非递归实现二叉树的中序遍历
+### <span id="C3">94.非递归实现二叉树的中序遍历</span>
 
 ```c
 //用栈实现中序遍历
@@ -608,9 +684,9 @@ int* inorderTraversal(struct TreeNode* root, int* returnSize){
 }
 ```
 
-## 二叉查找树(BST)
+## <span id="D">二叉查找树(BST)</span>
 
-### 669.修剪二叉搜索树
+### <span id="D1">669.修剪二叉搜索树</span>
 
 给定一个二叉搜索树，同时给定最小边界L 和最大边界 R。通过修剪二叉搜索树，使得所有节点的值在[L, R]中 (R>=L) 。你可能需要改变树的根节点，所以结果应当返回修剪好的二叉搜索树的新的根节点。
 
@@ -648,7 +724,7 @@ struct TreeNode* trimBST(struct TreeNode* root, int L, int R){
 }
 ```
 
-### 230.二叉搜索树中第k小的元素
+### <span id="D2">230.二叉搜索树中第k小的元素</span>
 
 #### 方法一(递归)
 
@@ -704,7 +780,7 @@ int kthSmallest(struct TreeNode* root, int k){
 }
 ```
 
-### 538.把二叉搜索树转换为累加树
+### <span id="D3">538.把二叉搜索树转换为累加树</span>
 
 #### 方法一(迭代，栈)
 
@@ -758,7 +834,7 @@ struct TreeNode* convert(struct TreeNode* root){   //递归进行反序中序遍
 }
 ```
 
-### 235.二叉树搜索树的最近公共祖先
+### <span id="D4">235.二叉树搜索树的最近公共祖先</span>
 
 给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。
 
@@ -791,7 +867,7 @@ struct TreeNode* lowestCommonAncestor(struct TreeNode* root, struct TreeNode* p,
 }
 ```
 
-### 236.二叉树的最近公共祖先
+### <span id="D5">236.二叉树的最近公共祖先</span>
 
 这题是235题的升级版，二叉搜索树变成了二叉树，即有序的条件没有了，第一次尝试的时候通过了两个递归函数自顶向下来找最近公共祖先(一个递归遍历二叉树，另一个递归判断某结点是否在树中)，但是递归过程中会产生大量的重复计算，最终会超出时间限制。
 
@@ -818,7 +894,7 @@ bool dfs(struct TreeNode* root,struct TreeNode* p,struct TreeNode* q){  //遍历
 }
 ```
 
-### 108.将有序数组转换为二叉搜索树
+### <span id="D6">108.将有序数组转换为二叉搜索树</span>
 
 将一个按照升序排列的有序数组，转换为一棵高度平衡二叉搜索树。
 
@@ -847,7 +923,7 @@ struct TreeNode* sortedArrayToBST(int* nums, int numsSize){
 }
 ```
 
-### 109.有序链表转换二叉搜索树
+### <span id="D7">109.有序链表转换二叉搜索树</span>
 
 ```c
 //基本思想和108题相同，只不过数组换成了链表
@@ -883,7 +959,7 @@ struct TreeNode* sortedListToBST(struct ListNode* head){
 }
 ```
 
-### 653.两树之和VI - 输入BST
+### <span id="D8">653.两树之和VI - 输入BST</span>
 
 给定一个二叉搜索树和一个目标结果，如果 BST 中存在两个元素且它们的和等于给定的目标结果，则返回 true。
 
@@ -913,7 +989,7 @@ void inorder(struct TreeNode* root,int *nums,int* length){   //递归中序遍�
 }
 ```
 
-### 530.二叉搜索树的最小绝对差
+### <span id="D9">530.二叉搜索树的最小绝对差</span>
 
 给你一棵所有节点为非负值的二叉搜索树，请你计算树中任意两节点的差的绝对值的最小值。
 
@@ -939,7 +1015,7 @@ int getMinimumDifference(struct TreeNode* root){
 }
 ```
 
-### 501.二叉搜索树中的众数
+### <span id="D10">501.二叉搜索树中的众数</span>
 
 给定一个有相同值的二叉搜索树（BST），找出 BST 中的所有众数（出现频率最高的元素）。
 
@@ -987,10 +1063,10 @@ void inOrder(struct TreeNode* root,int* output,int* returnSize){
 }
 ```
 
-## Trie(前缀树) unfinished
+## <span id="E">Trie(前缀树) unfinished</span>
 
-### 208.实现一个trie
+### <span id="E1">208.实现一个trie</span>
 
 
 
-### 677.键值映射
+### <span id="E2">677.键值映射</span>
